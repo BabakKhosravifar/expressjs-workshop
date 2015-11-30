@@ -1,11 +1,60 @@
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
+app.use(bodyParser());
 
 
+var entries = {
+  1: {
+    firstName: "Babak",
+    lastName: "Khosravifar",
+    emails: [
+      {type: "home", address: "Babak.Khosravifar@gmail.com"},
+      {type: "work", address: "Babak.Khosravifar@Mentorina.com"}
+    ]
+  },
+  2: {
+    firstName: "Ali",
+    lastName: "Hatamni",
+    emails: [
+      {type: "home", address: "Ali.Hatamni@gmail.com"},
+      {type: "work", address: "Ali.Hatamni@mcgill.ca"}
+    ]
+  },
+  3: {
+    firstName: "Fred",
+    lastName: "Smith",
+    emails: [
+      {type: "home", address: "Fred.Smith@gmail.com"},
+      {type: "work", address: "Fred.Smith@live.ca"}
+    ]
+  },
+  4: {
+    firstName: "Ali",
+    lastName: "Ashoori",
+    emails: [
+      {type: "home", address: "Ali.Ashoori@gmail.com"},
+      {type: "work", address: "Ali.Ashoori@bell.ca"}
+    ]
+  }  
+};
+
+
+
+app.post('/entry', function(req, res){
+
+    var keysInEntries = Object.keys(entries);
+    var keysInEntriesLength = keysInEntries.length;
+    
+    keysInEntriesLength++;
+    
+    entries[keysInEntriesLength] = {id: keysInEntriesLength, firstName: req.body.firstName, lastName: req.body.lastName};
+    
+    res.json(entries[keysInEntriesLength]);
+    res.end();
+
+}); 
 
 
 
